@@ -16,7 +16,7 @@ module.exports = {
         });
     },
 
-    dislike: function(postId, user) {
+    dislike: function(postId, user, callback) {
         var options = { autoIndex: false };
 
         var Schema = mongoose.Schema({
@@ -42,11 +42,11 @@ module.exports = {
         dislike.save(function(error) {
             if(!error) {
                 // success
-                console.log("success");
+                callback.success();
             }
             else {
                 // error
-                console.log(error);
+                callback.error(error);
             }
         });
     }
