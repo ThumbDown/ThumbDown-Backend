@@ -11,7 +11,7 @@ module.exports = function(express) {
             success: function() {
                 console.log("success");
 
-                db.dislike("15", "daniel");
+                db.dislike(postId, "daniel");
             },
 
             error: function(error) {

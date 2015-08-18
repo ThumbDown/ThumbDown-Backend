@@ -17,12 +17,28 @@ module.exports = {
     },
 
     dislike: function(postId, user) {
-        var schema = mongoose.Schema({ postId: String, dislikeCount: Number, dislikes: Array });
-        var Post = mongoose.model('Post', schema);
+        var options = { autoIndex: false };
 
-//      console.log(db.find({ _id: "postId" }, { _id: postId }));
+        var Schema = mongoose.Schema({
+            _id: {
+                type: String,
+                required: true,
+                index: {
+                    unique: true
+                }
+            },
 
-        var dislike = new Post({ postId: "0", dislikeCount: 0 });
+            dislikeCount: Number,
+
+            dislikes: Array
+
+        }, options);
+
+        var Post = mongoose.model('Post', Schema);
+
+        var dislike = new Post({ _id: postId, dislikeCount: 0 });
+
+        // Post isn't in the db, save it
         dislike.save(function(error) {
             if(!error) {
                 // success
