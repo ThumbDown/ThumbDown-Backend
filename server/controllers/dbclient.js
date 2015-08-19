@@ -4,6 +4,11 @@ var uri = require('../config/credentials').uri;
 var db;
 
 function appendDislike(post, user) {
+    // Only push if it is not in there
+    if(post.dislikes.indexOf(user) != -1) {
+        return;
+    }
+
     // Update the dislikes for this post
     post.dislikes.push(user);
 
