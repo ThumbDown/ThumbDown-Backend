@@ -3,9 +3,10 @@ var Post = require('../models/Post');
 var uri = require('../config/credentials').uri;
 var db;
 
-function appendDislike(post, user) {
+function appendDislike(post, user, callback) {
     // Only push if it is not in there
     if(post.dislikes.indexOf(user) != -1) {
+        callback.error(user + " has already disliked this post.");
         return;
     }
 
@@ -41,7 +42,7 @@ module.exports = {
         dislikedPost.save(function(error) {
             if(!error) {
                 // success
-                appendDislike(dislikedPost, user);
+                appendDislike(dislikedPost, user, callback);
                 callback.success();
             }
             else {
@@ -55,7 +56,7 @@ module.exports = {
                     }
 
                     // Append this user to the dislikes
-                    appendDislike(existingPost, user);
+                    appendDislike(existingPost, user, callback);
 
                     callback.success();
                 });
